@@ -1,0 +1,65 @@
+void setup()
+{
+  Serial.begin(9600); //initialises serial communication with baudrate set at 9600bps
+  pinMode(10,OUTPUT); //set pin 10 as output
+  pinMode(11,OUTPUT);//set pin 11 as output
+  pinMode(12,OUTPUT);//set pin 12 as output
+  pinMode(13,OUTPUT);//set pin 13 as output
+}
+char val;  // variable to store the value being read from bluetooth module
+
+void forward()   //function that runs motors in forward direction
+{
+  digitalWrite(10,HIGH);
+  digitalWrite(11,LOW);
+  digitalWrite(12,HIGH);
+  digitalWrite(13,LOW);
+}
+void backward()//function that runs motors in backward direction
+{
+  digitalWrite(10,LOW);
+  digitalWrite(11,HIGH);
+  digitalWrite(12,LOW);
+  digitalWrite(13,HIGH);
+}
+void left()//function that runs motors in left direction
+{
+  digitalWrite(10,HIGH);
+  digitalWrite(11,LOW);
+  digitalWrite(12,LOW);
+  digitalWrite(13,LOW);
+}
+void right()//function that runs motors in right direction
+{
+  digitalWrite(10,LOW);
+  digitalWrite(11,LOW);
+  digitalWrite(12,HIGH);
+  digitalWrite(13,LOW);
+}
+
+
+void loop()
+{
+  if(Serial.available()>0)  //wait for data to arrive in the USART rx pin (pin 0 )
+  {
+    val=Serial.read(); //read the serial data and store in the val variable
+    Serial.println(val); // print the value of val in the serial monitor
+  }
+  // condition to check the value stored in val and accordingly trigger the motors
+  if(val==1)
+  {
+    forward();
+  }
+  else if(val==2)
+  {
+    backward();
+  }
+  else if(val==3)
+  {
+    left();
+  }
+  else if(val==4)
+  {
+    right();
+  }
+}
